@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-xl-2 col-lg-2 d-none d-xl-block"></div>
+  <div class="col-xl-8 col-lg-8">
+    <div class="card">
+      <div class="card-header">
+        Chat
+      </div>
+      <div class="card-body" style="overflow: scroll; height: 300px;" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+        <ul class="chat">
+          <li class="left clearfix" *ngFor="let message of messages | async">
+            <span class="chat-img pull-left">
+              <img src="{{message.payload.val().user.photo}}" alt="User Avatar" class="img-circle img-responsive">
+            </span>
+            <div class="chat-body clearfix">
+              <div class="header">
+                <strong class="primary-font">{{message.payload.val().user.name}}</strong>
+                <small class="pull-right text-muted">
+                  <span class="glyphicon glyphicon-time"></span>
+                  {{message.payload.val().time - offset | date: "dd/MM/yyyy HH:mm"}}
+                </small>
+              </div>
+              <p>
+                {{message.payload.val().text}}
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <form role="form" class="form-horizontal" #sendMessageForm="ngForm" (ngSubmit)="onSubmit(sendMessageForm.value); sendMessageForm.reset()">
+          <div class="row">
+            <div class="col-8 col-sm-10">
+              <div class="form-group">
+                <input type="email" class="form-control" id="message" name="message" placeholder="Write your message... " ngModel>
+              </div>
+            </div>
+            <div class="col-4 col-sm-2">
+              <button type="submit" class="btn btn-secondary clickable">Send</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-2 col-lg-2 d-none d-lg-block"></div>
+</div>

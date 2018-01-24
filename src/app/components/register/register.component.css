@@ -1,0 +1,11 @@
+.clickable {
+  cursor: pointer;
+}
+
+h3, h4, label, span{
+  color: #c3c3c3;
+}
+
+.btn-warning {
+  font-weight: bold;
+}

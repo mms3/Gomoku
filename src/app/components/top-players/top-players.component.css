@@ -1,0 +1,87 @@
+.content {
+  color: #c3c3c3;
+  text-align: center;
+}
+
+.input {
+  text-align: right;
+  padding-right: 0px;
+}
+
+.button {
+  text-align: left;
+  padding-left: 2px;
+}
+
+input {
+  width: 50px;
+}
+
+.name {
+  font-size: 24px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: top;
+  text-overflow: ellipsis;
+  margin-bottom: 18px;
+}
+.order {
+  font-style: italic;
+  font-size: 14px;
+  float:left;
+}
+
+.rank {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 18px;
+}
+
+.played {
+  margin-top: 2px;
+  margin-bottom: 30px;
+}
+
+.header {
+  overflow: hidden;
+}
+
+hr {
+  border-color: #979797;
+}
+
+@media screen and (max-width: 575px) {
+  .col-12 {
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  .col-12 {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .col-12 {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width:1199px) {
+  .col-12 {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .col-12 {
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+}

@@ -1,0 +1,42 @@
+<div class="content container">
+  <div class="newGame clickable" (click)="newGame()">
+    <h4><span class="fa fa-plus" aria-hidden="true"></span> <b>New game</b></h4>
+  </div>
+  <br><hr><br><h3><b>Rooms</b></h3><br>
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let game of games | async">
+      <div class="game" [ngClass]="{'finished': (game.payload.val().status == 'finished' || game.payload.val().status == 'closed' || game.payload.val().status == 'beforeClosed' || game.payload.val().status == 'rematch' || game.payload.val().nextMoveTime - now -offset < -5000) && game.payload.val().player2,
+                                    'created': game.payload.val().status == 'created',
+                                    'played': (game.payload.val().status == 'ready' || game.payload.val().status == 'inProgress' || game.payload.val().status == 'rematchAccepted') && game.payload.val().nextMoveTime - now - offset >= -5000}">
+        <div class="players">
+          <div title="wins: {{game.payload.val().player1.stats?.wins}}, losses: {{game.payload.val().player1.stats?.losses}}">
+            <span *ngIf="game.payload.val().player1.stats" class="rank">(<span class="fa fa-star" aria-hidden="true"></span>&nbsp;{{game.payload.val().player1?.stats.rank}})</span>
+            <span class="player">{{game.payload.val().player1.displayName}}</span>
+          </div>
+          <div title="wins: {{game.payload.val().player2?.stats?.wins}}, losses: {{game.payload.val().player2?.stats?.losses}}">
+            <span *ngIf="game.payload.val().player2 && game.payload.val().player2.stats" class="rank">(<span class="fa fa-star" aria-hidden="true"></span>&nbsp;{{game.payload.val().player2?.stats.rank}})</span>
+            <span class="player">{{game.payload.val().player2?.displayName}}&nbsp;</span>
+          </div>
+        </div>
+        <div class="options">
+          <button *ngIf="!game.payload.val().player2 && game.payload.val().player1?.uid != user.uid && game.payload.val().status == 'created'" (click)="join(game.key)" class="btn btn-success clickable">JOIN</button>
+          <button *ngIf="(game.payload.val().status == 'ready' || game.payload.val().status == 'inProgress') && (user.uid == game.payload.val().player1.uid || user.uid == game.payload.val().player2.uid) && game.payload.val().nextMoveTime - now - offset >= -5000" (click)="continue(game.key)" class="btn btn-primary clickable">CONTINUE</button>
+          <button *ngIf="game.payload.val().status == 'created' && !game.payload.val().player2 && user.uid == game.payload.val().player1.uid" (click)="continue(game.key)" class="btn btn-success clickable">CONTINUE</button>
+          <button *ngIf="game.payload.val().player2 && game.payload.val().player1?.uid != user.uid && game.payload.val().player2?.uid != user.uid && (game.payload.val()?.status == 'inProgress' || game.payload.val()?.status == 'ready') && game.payload.val().nextMoveTime - now > -5000" (click)="watch(game.key)" class="btn btn-primary clickable">WATCH</button>
+          <span class="info" *ngIf="(game.payload.val().status == 'closed' || game.payload.val().status == 'beforeClosed' || game.payload.val().status == 'finished') && !game.payload.val().player2">CANCELLED</span>
+          <span class="info" *ngIf="(game.payload.val().status == 'closed' || game.payload.val().status == 'beforeClosed' || game.payload.val().status == 'finished' || game.payload.val().status == 'rematch') && game.payload.val().player2">FINISHED</span>
+          <span class="info" *ngIf="(game.payload.val().status == 'ready' || game.payload.val().status == 'inProgress') && game.payload.val().nextMoveTime - now - offset < -5000">FINISHED</span>
+        </div>
+        <div class="date">
+          <span class="fa fa-clock-o" aria-hidden="true"></span>
+          <span>{{game.payload.val().createdOn - offset| date: "dd/MM/yyyy HH:mm"}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

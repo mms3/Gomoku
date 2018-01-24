@@ -1,0 +1,41 @@
+<div class="content container">
+  <h2><b>Top players</b></h2><br><br><br>
+  <div class="row">
+    <div class="col-12" *ngFor="let user of topPlayers | async; let i = index;">
+      <div class="player">
+        <div class="header">
+          <div class="order">#{{i+1}}</div>
+          <div class="name">
+            {{user.player.name}}
+          </div>
+        </div>
+        <div class="rank" title="rank">
+          <span class="fa fa-star" aria-hidden="true"></span>&nbsp;{{user.rank}}
+        </div>
+        <div>
+          <span title="wins" class="fa fa-plus-circle" aria-hidden="true"></span>
+          <span title="wins">{{user.wins}}&nbsp;</span>
+          &nbsp;-&nbsp;&nbsp;
+          <span title="losses" class="fa fa-minus-circle" aria-hidden="true"></span>
+          <span title="losses">{{user.losses}}</span>
+        </div>
+        <div class="played">
+          (<span title="played" class="fa fa-gamepad" aria-hidden="true"></span>
+          <span title="losses">{{user.played}}</span>)
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+  <br><br><br>
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="col-2 input">
+      <input type="number" [(ngModel)]="number">
+    </div>
+    <div class="col-2 button">
+      <button class="btn btn-warning btn-sm" (click)="setTopPlayers()">Filter</button>
+    </div>
+    <div class="col-4"></div>
+  </div>
+</div>

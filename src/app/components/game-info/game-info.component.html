@@ -1,0 +1,40 @@
+<ng-template #startInfo class="alert alert-info" let-c="close" let-d="dismiss">
+  <div class="modal-body">
+    <p>{{modalBody}}</p>
+  </div>
+</ng-template>
+<ng-template #finishInfo let-c="close" let-d="dismiss">
+  <div class="modal-header" [ngClass]="modalClass">
+    <h4 class="modal-title">{{modalTitle}}</h4>
+  </div>
+  <div class="modal-body">
+    <p>{{modalBody}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click'); suggestRematch()" *ngIf="playerNumber != 0">Play again</button>
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')" routerLink="/home">Go back</button>
+  </div>
+</ng-template>
+<ng-template #rematchInfo let-c="close" let-d="dismiss">
+  <div class="modal-header alert alert-info">
+    <h4 class="modal-title">{{modalTitle}}</h4>
+  </div>
+  <div class="modal-body">
+    <p>{{modalBody}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click'); acceptRematch()" *ngIf="playerNumber != 0 && user.uid != game?.rematchUserId && game?.status != 'rematchRejected'">Play</button>
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')" routerLink="/home">Go back</button>
+  </div>
+</ng-template>
+<ng-template #closeInfo let-c="close" let-d="dismiss">
+  <div class="modal-header alert alert-info">
+    <h4 class="modal-title">{{modalTitle}}</h4>
+  </div>
+  <div class="modal-body">
+    <p>{{modalBody}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')" routerLink="/home">Go back</button>
+  </div>
+</ng-template>

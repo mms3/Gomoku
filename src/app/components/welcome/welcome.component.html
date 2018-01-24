@@ -1,0 +1,53 @@
+<div class="content container">
+  <div class="site-wrapper">
+    <div class="site-wrapper-inner">
+      <div class="container">
+        <div class="inner cover">
+          <h1 class="cover-heading">Gomoku</h1>
+          <p class="lead">
+            Gomoku, also called 5 in a row, is an abstract strategy game.<br><br>
+            Traditionally, it is played by putting black and white stones on a Go board using 15x15 or 19x19 intersections.
+            Players take turns and place a stone of their color on an empty intersection.
+            The goal is to form an unbroken chain of 5 stones (and no more) vertically, horizontally or diagonally*.<br><br>
+            Gomoku has many variations. Here, players mark spaces in a 18x18 grid by placing X or O, instead of using traditional Go pieces and intersections.
+          </p>
+          <p class="lead" *ngIf="!(user|async)">
+            <br>Create an account or sign in using Google, Facebook or Github to save your statistics. Alternatively, you can play as guest, but your progress will not be saved.
+          </p>
+          <p class="lead">
+            <button type="button" *ngIf="(user|async)" routerLink="/home" class="btn btn-warning"><i class="fa fa-gamepad" aria-hidden="true"></i> Go play</button>
+            <button type="button" *ngIf="!(user|async) || (user|async)?.isAnonymous" routerLink="/register" class="btn btn-warning"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</button>
+            <button type="button" *ngIf="!(user|async) || (user|async)?.isAnonymous" routerLink="/signIn" class="btn btn-warning"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign in</button>
+            <button type="button" *ngIf="!(user|async)" (click)="startAsGuest()" class="btn btn-warning"><i class="fa fa-user-times" aria-hidden="true"></i> Start as guest</button>
+            <button type="button" *ngIf="(user|async) && !(user|async)?.emailVerified && !(user|async)?.isAnonymous" class="btn btn-warning btn-email" (click)="sendEmail()"><i class="fa fa-envelope" aria-hidden="true"></i> Send verfication email</button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br>
+  <div class="marketing">
+    <div class="row">
+      <div class="col-lg-4">
+        <span class="fa fa-users fa-5x" aria-hidden="true"></span>
+        <h2>Multiplayer</h2>
+        <p>Play in real time with anyone in the world.</p>
+      </div>
+      <div class="col-lg-4">
+        <span class="fa fa-bar-chart fa-5x" aria-hidden="true"></span>
+        <h2>Player Statistics</h2>
+        <p>Save your progress and try to be the best.</p>
+      </div>
+      <div class="col-lg-4">
+        <span class="fa fa-mobile fa-5x" aria-hidden="true"></span>
+        <h2>Multi-device</h2>
+        <p>Play on PC, tablet or mobile.</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <br>
+    <a href="https://en.wikipedia.org/wiki/Gomoku">* Learn more about Gomoku.</a>
+  </div>
+</div>
+

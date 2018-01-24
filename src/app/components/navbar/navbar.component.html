@@ -1,0 +1,118 @@
+<ng-template #profile let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{(user|async)?.displayName}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-3 col-md-3 col-lg-3 " align="center">
+        <img alt="User Pic" src="{{(user|async)?.photoURL}}" class="rounded-circle img-responsive">
+        <br>
+      </div>
+      <div class="col-sm-9 col-md-9 col-lg-9">
+        <span *ngIf="(user|async)?.isAnonymous">Anonymous account</span>
+        <table class="table table-user-information" *ngIf="!(user|async)?.isAnonymous">
+          <tbody>
+          <tr>
+            <td class="columnA"><span class="fa fa-envelope" aria-hidden="true"></span>&nbsp;Email:</td>
+            <td class="columnB">{{(user|async)?.email}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="!(user|async)?.isAnonymous">
+      <br>
+      <h4>Your statistics</h4>
+      <table class="table">
+        <tbody>
+        <tr>
+          <td><span class="fa fa-star" aria-hidden="true"></span>&nbsp;Rank:</td>
+          <td>{{stats?.rank}}</td>
+        </tr>
+        <tr>
+          <td><span class="fa fa-gamepad" aria-hidden="true"></span>&nbsp;Played games:</td>
+          <td>{{stats?.played}}</td>
+        </tr>
+        <tr>
+          <td><span class="fa fa-plus-circle" aria-hidden="true"></span>&nbsp;Wins:</td>
+          <td>{{stats?.wins}}</td>
+        </tr>
+        <tr>
+          <td><span class="fa fa-minus-circle" aria-hidden="true"></span>&nbsp;Losses:</td>
+          <td>{{stats?.losses}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">OK</button>
+  </div>
+</ng-template>
+<nav class="navbar navbar-expand-lg navbar-dark my-nav fixed-top">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">Gomoku</a>
+    <div class="d-flex flex-row order-2 order-lg-3">
+      <ul class="navbar-nav flex-row">
+        <li class="nav-item d-block d-sm-block d-md-block d-lg-none" *ngIf="(user|async)">
+          <a class="nav-link clickable" (click)="showProfile()">
+            <span class="fa fa-user" aria-hidden="true"></span>
+            <span class="username">{{(user|async)?.displayName}}&nbsp;</span>
+            <span class="stats" *ngIf="!(user|async)?.isAnonymous">(<span class="star"><span class="fa fa-star" aria-hidden="true"></span>&nbsp;</span>{{stats?.rank}})&nbsp;</span>
+            <span class="navbar-text"></span>
+          </a>
+        </li>
+      </ul>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" (click)="showNavbar()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse order-3 order-lg-2" id="navbarNavDropdown" [ngClass]="{'hide': isClicked}">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="nav-link" routerLink="/home" *ngIf="(user|async)">
+            <i class="fa fa-gamepad" aria-hidden="true"></i>
+            Rooms
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="nav-link" routerLink="/top" *ngIf="(user|async)">
+            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+            Top players
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="nav-link" routerLink="/register" *ngIf="!(user|async) || (user|async)?.isAnonymous">
+            <i class="fa fa-user-plus" aria-hidden="true"></i>
+            Register
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="nav-link" routerLink="/signIn" *ngIf="!(user|async) || (user|async)?.isAnonymous">
+            <i class="fa fa-sign-in" aria-hidden="true"></i>
+            Sign in
+          </a>
+        </li>
+        <li class="nav-item d-none d-lg-block d-xl-block" *ngIf="(user|async)">
+          <a class="nav-link clickable" (click)="showProfile()">
+            <span class="fa fa-user" aria-hidden="true"></span>
+            <span class="username">{{(user|async)?.displayName}}&nbsp;</span>
+            <span class="" *ngIf="!(user|async)?.isAnonymous">(<span class="fa fa-star" aria-hidden="true"></span>&nbsp;{{stats?.rank}})&nbsp;</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a class="nav-link clickable" *ngIf="(user|async) && !(user|async)?.isAnonymous" (click)="signOut()">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+            Sign out
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+

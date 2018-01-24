@@ -1,0 +1,132 @@
+<div>
+  <app-game-info (suggestEvent)="suggestRematch()" (rematchEvent)="acceptRematch()" [user]="user" [game]="game" [playerNumber]="playerNumber"></app-game-info>
+</div>
+<div class="main">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-8 col-md-8 order-xl-2">
+        <div class="inner">
+          <table class="table-bordered">
+            <tbody>
+              <tr *ngFor="let boardRow of game?.board; let row = index;">
+                <td class="cell" *ngFor="let box of boardRow; let col = index;" [ngClass]="{'last': (game?.lastMove?.row == row && game?.lastMove?.col == col) && game?.status == 'inProgress'}">
+                  <img class="img-responsive" [src]="img(box)" (click)="move(row, col)" [ngClass]="{ 'clickable': (box == 0 && playerNumber != 0 && playerNumber == game?.turn && (game?.status == 'ready' || game?.status == 'inProgress'))}">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-xl-2 col-md-6 col-sm-6 col-6 order-xl-1 d-md-none d-xl-block">
+        <div class="container playerbox" [ngClass]="{'current': game?.turn == 1}">
+          <div class="row">
+            <div class="col-xl-12 col-lg-4 col-md-4 col-sm-12 col-12">
+              <div class="playerImg">
+                <img *ngIf="game?.player1.photoURL" src="{{game?.player1.photoURL}}" class="img-responsive img-circle">
+              </div>
+            </div>
+            <div class="col-xl-12 col-lg-8 col-md-8 col-sm-12 col-12">
+              <div class="playerData">
+                <div class="playerName">
+                  {{game?.player1.displayName}}
+                </div>
+                <div *ngIf="game?.player1?.stats" class="playerRanking" title="wins: {{game?.player1.stats.wins}}, losses: {{game?.player1.stats.losses}}">
+                  <span *ngIf="game?.player1?.stats" class="fa fa-star" aria-hidden="true"></span>&nbsp;
+                  {{game?.player1?.stats?.rank}}&nbsp;
+                </div>
+                <div *ngIf="!game?.player1?.stats" class="playerRanking">
+                  &nbsp;
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="time">
+            <span *ngIf="game?.turn == 1 && timeLeft >= 0 && (game?.status == 'ready' || game?.status == 'inProgress')">Time left: {{timeLeft}}</span>&nbsp;
+            <span *ngIf="game?.turn == 1 && timeLeft < 0 && (game?.status == 'ready' || game?.status == 'inProgress')">Time left: 0</span>&nbsp;
+          </div>
+          <div class="playerButtons" *ngIf="playerNumber != 0">
+            <button type="button" class="btn btn-secondary btn clickable" *ngIf="playerNumber == 1 && game?.status == 'created'" routerLink="/home">Go back</button>
+            <button type="button" class="btn btn-secondary btn clickable" *ngIf="playerNumber == 1 && (game?.status == 'ready' || game?.status == 'inProgress')" routerLink="/home">Give up</button>
+            <div *ngIf="playerNumber == 2 || (game?.status != 'created' && game?.status != 'ready' && game?.status != 'inProgress')"><br></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2 col-md-4 col-sm-6 col-6 order-xl-3">
+        <div class="col-xl-12 col-md-12 d-none d-sm-none d-md-block d-lg-block d-xl-none">
+          <div class="container playerbox" [ngClass]="{'current': game?.turn == 1}">
+            <div class="row">
+              <div class="col-xl-12 col-lg-4 col-md-4 col-sm-12 col-12">
+                <div class="playerImg">
+                  <img *ngIf="game?.player1.photoURL" src="{{game?.player1.photoURL}}" class="img-responsive img-circle">
+                </div>
+              </div>
+              <div class="col-xl-12 col-lg-8 col-md-8 col-sm-12 col-12">
+                <div class="playerData">
+                  <div class="playerName">
+                    {{game?.player1.displayName}}
+                  </div>
+                  <div *ngIf="game?.player1?.stats" class="playerRanking" title="wins: {{game?.player1.stats.wins}}, losses: {{game?.player1.stats.losses}}">
+                    <span *ngIf="game?.player1?.stats" class="fa fa-star" aria-hidden="true"></span>&nbsp;
+                    {{game?.player1?.stats?.rank}}&nbsp;
+                  </div>
+                  <div *ngIf="!game?.player1?.stats" class="playerRanking">
+                    &nbsp;
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="time">
+              <span *ngIf="game?.turn == 1 && timeLeft >= 0 && (game?.status == 'ready' || game?.status == 'inProgress')">Time left: {{timeLeft}}</span>&nbsp;
+              <span *ngIf="game?.turn == 1 && timeLeft < 0 && (game?.status == 'ready' || game?.status == 'inProgress')">Time left: 0</span>&nbsp;
+            </div>
+            <div class="playerButtons" *ngIf="playerNumber != 0">
+              <button type="button" class="btn btn-secondary btn clickable" *ngIf="playerNumber == 1 && game?.status == 'created'" routerLink="/home">Go back</button>
+              <button type="button" class="btn btn-secondary btn clickable" *ngIf="playerNumber == 1 && (game?.status == 'ready' || game?.status == 'inProgress')" routerLink="/home">Give up</button>
+              <div *ngIf="playerNumber == 2 || (game?.status != 'created' && game?.status != 'ready' && game?.status != 'inProgress')"><br></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+          <div class="container playerbox" *ngIf="game?.status != 'created'" [ngClass]="{'current': game?.turn == 2}">
+            <div class="row">
+              <div class="col-xl-12 col-lg-4 col-md-4 col-sm-12 col-12">
+                <div class="playerImg">
+                  <img *ngIf="game?.player2?.photoURL" src="{{game?.player2?.photoURL}}" class="img-responsive img-circle">
+                </div>
+              </div>
+              <div class="bbb col-xl-12 col-lg-8 col-md-8 col-sm-12 col-12">
+                <div class="playerData">
+                  <div class="playerName">
+                    {{game?.player2?.displayName}}
+                  </div>
+                  <div *ngIf="game?.player2?.stats" class="playerRanking" title="wins: {{game?.player2?.stats?.wins}}, losses: {{game?.player2?.stats?.losses}}">
+                    <span *ngIf="game?.player2?.stats" class="fa fa-star" aria-hidden="true"></span>&nbsp;
+                    {{game?.player2?.stats?.rank}}&nbsp;
+                  </div>
+                  <div *ngIf="!game?.player2?.stats" class="playerRanking">
+                    &nbsp;
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="time">
+              <span *ngIf="game?.turn == 2 && timeLeft >= 0 && (game?.status == 'ready' || game?.status == 'inProgress')">Time left: {{timeLeft}}</span>&nbsp;
+              <span *ngIf="game?.turn == 2 && timeLeft < 0 && (game?.status == 'ready' || game?.status == 'inProgress')">Time left: 0</span>&nbsp;
+            </div>
+            <div class="playerButtons" *ngIf="playerNumber != 0">
+              <button type="button" class="btn btn-secondary btn clickable" *ngIf="playerNumber == 2 && game?.status == 'created'" routerLink="/home">Go back</button>
+              <button type="button" class="btn btn-secondary btn clickable" *ngIf="playerNumber == 2 && (game?.status == 'ready' || game?.status == 'inProgress')" routerLink="/home">Give up</button>
+              <div *ngIf="playerNumber == 1 || (game?.status != 'created' && game?.status != 'ready' && game?.status != 'inProgress')"><br></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><br>
+    <div>
+      <app-chat [user]="user" [id]="gameId" [offset]="offset"></app-chat>
+    </div>
+  </div>
+</div>

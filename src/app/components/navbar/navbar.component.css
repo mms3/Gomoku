@@ -1,0 +1,92 @@
+.modal-header {
+  background-color: #F0F0F0;
+}
+.my-nav {
+  background-color: #343434;
+  font-weight: bold;
+}
+
+.hide {
+  display: none;
+}
+
+.nav-item {
+  margin-left: 10px;
+}
+.clickable {
+  cursor: pointer;
+}
+
+.username {
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: top;
+  text-overflow: ellipsis;
+  max-width: calc(100vw/4);
+  display: inline-block;
+}
+
+.modal-title {
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: top;
+  text-overflow: ellipsis;
+}
+
+.img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.table-user-information {
+  width: 100%;
+}
+
+td {
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.columnA {
+  width: 100px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .username {
+    max-width: calc(100vw/2 - 60px);
+  }
+}
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  .username {
+    max-width: calc(100vw/3);
+  }
+}
+
+@media screen and (min-width: 422px) and (max-width: 575px) {
+  .username {
+    max-width: calc(100vw/3 - 20px);
+  }
+}
+
+@media screen and (max-width: 421px) {
+  .username {
+    max-width: 60px;
+  }
+  .star {
+    display: none;
+  }
+}
+@media screen and (max-width: 350px) {
+  .stats {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  img {
+    width: 30%;
+    height: 30%;
+  }
+}
